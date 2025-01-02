@@ -23,7 +23,7 @@ Execute the following commands:
 2. Change directory to the project
 
 ```bash
-  cd bankSys
+  cd GitHubBackend
 ```
 
 3. Install all dependencies
