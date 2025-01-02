@@ -1,17 +1,20 @@
-import config from "config";
-import express from "express";
 import jwt from "jsonwebtoken";
+import config from "config";
+
+const JWT_SECRET = config.get("JWT_SECRET");
 
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers["authorization"];
+  console.log(authHeader);
+
   const token = authHeader.split(" ")[1];
-  const JWT_SECRET = config.get("JWT_SECRET");
+
   try {
-    let check = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET);
     next();
   } catch (error) {
-    console.log(error);
-    res.status(400).json({ msg: "Invalid token." });
+    console.error("Invalid token:", error);
+    return res.status(401).json({ msg: "Invalid token" });
   }
 };
 
